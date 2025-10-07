@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final WebClient webClient;
 
     @Override
     public Long addProduct(CreateProductRequest request) {
@@ -64,11 +66,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void reduceQuantity(Long id, long quantity)throws ProductCustomException {
         log.info("Reducing Quantity: {}", quantity);
+
+        String s = webClient.get()
+                .uri("/d")
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        log.info("Response from Order Service: {}", s);
+
         ProductEntity product = productRepository
                 .findById(id)
                 .orElseThrow(() -> new ProductCustomException("Product not found", HttpStatus.NOT_FOUND));
 
         if (product.getQuantity() < quantity) {
+            log.error("Product Quantity Not Enough");
             throw new ProductCustomException("Product not enough", HttpStatus.BAD_REQUEST);
         }
 
