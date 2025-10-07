@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0                 # MySQL version
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123   # Root password
+      MYSQL_DATABASE: mydb           # Default database
+      MYSQL_USER: user               # Optional: create a new user
+      MYSQL_PASSWORD: user123        # Password for the user
+    ports:
+      - "3306:3306"                  # Expose port to host
+    volumes:
+      - mysql_data:/var/lib/mysql    # Persist data
+
+volumes:
+  mysql_data:
