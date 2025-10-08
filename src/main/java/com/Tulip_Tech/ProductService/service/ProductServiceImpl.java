@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long productId)throws NotFoundException {
+    public Product getProductById(Long productId) throws NotFoundException {
         ProductEntity productEntity = this.findById(productId);
         return productMapper.entityToDomain(productEntity);
     }
@@ -41,19 +41,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAllProducts() {
         List<ProductEntity> productEntities = productRepository.findAll();
-        return productEntities.stream()
-                .map(productMapper::entityToDomain)
-                .toList();
+        return productEntities.stream().map(productMapper::entityToDomain).toList();
     }
 
     @Override
-    public void deleteById(Long id)throws  NotFoundException {
+    public void deleteById(Long id) throws NotFoundException {
         this.findById(id);
         productRepository.deleteById(id);
     }
 
     @Override
-    public Product update(Long id, UpdateProductRequest product)throws  NotFoundException {
+    public Product update(Long id, UpdateProductRequest product) throws NotFoundException {
         ProductEntity productEntity = this.findById(id);
         if (productEntity != null) {
             ProductEntity updatedEntity = productMapper.updateToEntity(product, productEntity);
@@ -64,19 +62,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void reduceQuantity(Long id, long quantity)throws ProductCustomException {
+    public void reduceQuantity(Long id, long quantity) throws ProductCustomException {
         log.info("Reducing Quantity: {}", quantity);
 
-        String s = webClient.get()
-                .uri("/d")
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
-        log.info("Response from Order Service: {}", s);
-
-        ProductEntity product = productRepository
-                .findById(id)
-                .orElseThrow(() -> new ProductCustomException("Product not found", HttpStatus.NOT_FOUND));
+        ProductEntity product = productRepository.findById(id).orElseThrow(() -> new ProductCustomException("Product not found", HttpStatus.NOT_FOUND));
 
         if (product.getQuantity() < quantity) {
             log.error("Product Quantity Not Enough");
@@ -91,7 +80,6 @@ public class ProductServiceImpl implements ProductService {
 
 
     private ProductEntity findById(Long id) throws NotFoundException {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Project not found"));
+        return productRepository.findById(id).orElseThrow(() -> new NotFoundException("Project not found"));
     }
 }
