@@ -17,19 +17,19 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "PRODUCT_ID")
+    @Column(name = "product_id")
     private Long id;
 
     @Setter
-    @Column(name = "PRODUCT_NAME")
+    @Column(name = "product_name")
     private String productName;
 
     @Setter
-    @Column(name = "PRICE")
+    @Column(name = "price")
     private long price;
 
     @Setter
-    @Column(name = "QUANTITY")
+    @Column(name = "quantity")
     private long quantity;
 
 
