@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.Tulip-Tech</groupId>
 	<artifactId>ProductService</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>ProductService</name>
 	<description>This is a product service for my microservice learning.</description>
 	<url/>
@@ -126,6 +126,21 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <from>
+                        <image> eclipse-temurin:21-jdk </image>
+                    </from>
+                    <to>
+                        <image>registry.hub.docker.com/asadullah1005/product-service</image>
+                        <tags>${project.version}</tags>
+                    </to>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
