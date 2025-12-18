@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://${DB_HOST:host.docker.internal}:${DB_PORT:3306}/${DB_NAME:product}
-    username: ${DB_USER:root}
-    password: ${DB_PASSWORD:root1234}
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/product
+    username: root
+    password: root1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: PRODUCT-SERVICE
@@ -22,13 +22,6 @@ order:
   service:
     url: ${ORDER_SERVICE_URL:http://order-service:8083/order}
 
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-  zipkin:
-    tracing:
-      endpoint: ${ZIPKIN:http://zipkin:9411/api/v2/spans}
 eureka:
   instance:
     prefer-ip-address: true
