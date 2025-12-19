@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:3306/product
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/productdb
     username: root
     password: root1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,14 +21,4 @@ spring:
 order:
   service:
     url: ${ORDER_SERVICE_URL:http://order-service:8083/order}
-
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-        defaultZone: ${EUREKA_SERVER_ADDRESS:http://service-registry:8761/eureka/}
-    register-with-eureka: true
-    fetch-registry: true
-
 
